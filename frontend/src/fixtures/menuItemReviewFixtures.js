@@ -34,6 +34,5 @@ const menuItemReviewFixtures = {
     },
   ],
 };
-  
+
 export { menuItemReviewFixtures };
-  
