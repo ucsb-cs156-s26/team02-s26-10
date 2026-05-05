@@ -36,7 +36,7 @@ function UCSBDateForm({
             <Form.Group className="mb-3">
               <Form.Label htmlFor="id">Id</Form.Label>
               <Form.Control
-                data-testid="UCSBDateForm-id"
+                data-testid="MenuItemReviewForm-id"
                 id="id"
                 type="text"
                 {...register("id")}
