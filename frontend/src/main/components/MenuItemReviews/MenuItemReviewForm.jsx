@@ -1,4 +1,4 @@
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
@@ -24,9 +24,6 @@ function MenuItemReviewForm({
   const isodate_regex =
     /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
   // Stryker restore Regex
-
-  // Stryker disable next-line all
-  const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i; // Accepts from 1900-2099 followed by 1-4.  Close enough.
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -105,7 +102,7 @@ function MenuItemReviewForm({
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.dateReviewed && "DateReviewed is required. "}
+          {errors.dateReviewed && "Date Reviewed is required. "}
         </Form.Control.Feedback>
       </Form.Group>
 
@@ -117,7 +114,7 @@ function MenuItemReviewForm({
           type="text"
           isInvalid={Boolean(errors.comments)}
           {...register("comments", {
-            required: "Comments are required.",
+            required: "Comments is required.",
           })}
         />
         <Form.Control.Feedback type="invalid">
