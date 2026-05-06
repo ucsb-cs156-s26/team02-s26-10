@@ -1,20 +1,22 @@
 const helpRequestFixtures = {
-    oneRequest: {
-        id: 1,
-        requesterEmail: "string",
-        teamId: "string",
-        tableOrBreakoutRoom: "string",
-        requestTime: "2026-05-06T23:05:27.266Z",
-        explanation: "string",
-        solved: true
-    },
+    oneRequest: [
+        {
+            id: 1,
+            requesterEmail: "string",
+            teamId: "string",
+            tableOrBreakoutRoom: "string",
+            requestTime: "2026-05-06T23:05:27",
+            explanation: "string",
+            solved: true
+        }
+    ],
     threeRequests: [
         {
             id: 1,
             requesterEmail: "user1@example.com",
             teamId: "10",
             tableOrBreakoutRoom: "string",
-            requestTime: "2026-05-06T23:05:27.266Z",
+            requestTime: "2026-05-06T23:05:27",
             explanation: "string",
             solved: true
         },
@@ -23,7 +25,7 @@ const helpRequestFixtures = {
             requesterEmail: "user2@example.com",
             teamId: "10",
             tableOrBreakoutRoom: "string",
-            requestTime: "2026-05-06T23:05:27.266Z",
+            requestTime: "2026-05-06T23:05:27",
             explanation: "string",
             solved: true
         },
@@ -32,7 +34,7 @@ const helpRequestFixtures = {
             requesterEmail: "user3@example.com",
             teamId: "string",
             tableOrBreakoutRoom: "string",
-            requestTime: "2026-05-06T23:05:27.266Z",
+            requestTime: "2026-05-06T23:05:27",
             explanation: "string",
             solved: true
         },
