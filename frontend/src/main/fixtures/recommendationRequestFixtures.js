@@ -41,4 +41,3 @@ const recommendationRequestFixtures = {
 };
 
 export { recommendationRequestFixtures };
-
