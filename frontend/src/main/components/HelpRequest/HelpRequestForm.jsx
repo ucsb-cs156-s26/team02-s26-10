@@ -159,7 +159,7 @@ function HelpRequestForm({
             <Form.Control
               data-testid="HelpRequestForm-solved"
               id="solved"
-              type="boolean"
+              type="text"
               isInvalid={Boolean(errors.solved)}
               {...register("solved", {
                 required: true,
@@ -169,7 +169,7 @@ function HelpRequestForm({
             <Form.Control.Feedback type="invalid">
               {errors.solved && "Whether the request is solved ('true' or 'false') is required. "}
               {errors.solved?.type === "pattern" &&
-                "Whether the request is solved must be a boolean value ('true' or 'false'."}
+                "Whether the request is solved must be a boolean value ('true' or 'false')."}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
