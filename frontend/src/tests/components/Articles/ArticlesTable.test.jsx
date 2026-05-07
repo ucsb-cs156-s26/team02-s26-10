@@ -6,6 +6,15 @@ import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { toast } from "react-toastify";
+
+vi.mock("react-toastify", async () => {
+  const actual = await vi.importActual("react-toastify");
+  return {
+    ...actual,
+    toast: vi.fn(),
+  };
+});
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
@@ -175,12 +184,12 @@ describe("ArticlesTable tests", () => {
 
   test("Delete button calls delete callback", async () => {
     const currentUser = currentUserFixtures.adminUser;
-  
+
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
       .onDelete("/api/articles")
       .reply(200, { message: "Article deleted" });
-  
+
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -191,22 +200,26 @@ describe("ArticlesTable tests", () => {
         </MemoryRouter>
       </QueryClientProvider>,
     );
-  
+
     await waitFor(() => {
       expect(
         screen.getByTestId(`ArticlesTable-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
-  
+
     const deleteButton = screen.getByTestId(
       `ArticlesTable-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
-  
+
     fireEvent.click(deleteButton);
-  
+
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
     expect(axiosMock.history.delete[0].url).toBe("/api/articles");
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+
+    await waitFor(() => {
+      expect(toast).toHaveBeenCalledWith("Article deleted");
+    });
   });
 });
