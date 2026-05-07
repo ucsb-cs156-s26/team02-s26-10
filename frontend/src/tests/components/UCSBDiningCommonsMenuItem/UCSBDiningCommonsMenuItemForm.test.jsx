@@ -76,6 +76,23 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
 
+  test("that the correct testIds are present", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <UCSBDiningCommonsMenuItemForm />
+        </Router>
+      </QueryClientProvider>,
+    );
+
+    expect(
+      await screen.findByTestId(`${testId}-diningCommonsCode`),
+    ).toBeInTheDocument();
+    expect(screen.getByTestId(`${testId}-name`)).toBeInTheDocument();
+    expect(screen.getByTestId(`${testId}-station`)).toBeInTheDocument();
+    expect(screen.getByTestId(`${testId}-submit`)).toBeInTheDocument();
+  });
+
   test("that the correct validations are performed", async () => {
     render(
       <QueryClientProvider client={queryClient}>
