@@ -68,7 +68,9 @@ describe("HelpRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit Help Request");
-      expect(screen.queryByTestId("HelpRequestForm-requesterEmail")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("HelpRequestForm-requesterEmail"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -125,11 +127,19 @@ describe("HelpRequestEditPage tests", () => {
       await screen.findByTestId("HelpRequestForm-id");
 
       const idField = screen.getByTestId("HelpRequestForm-id");
-      const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+      const requesterEmailField = screen.getByTestId(
+        "HelpRequestForm-requesterEmail",
+      );
       const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-      const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
-      const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
-      const explanationField = screen.getByTestId("HelpRequestForm-explanation");
+      const tableOrBreakoutRoomField = screen.getByTestId(
+        "HelpRequestForm-tableOrBreakoutRoom",
+      );
+      const requestTimeField = screen.getByTestId(
+        "HelpRequestForm-requestTime",
+      );
+      const explanationField = screen.getByTestId(
+        "HelpRequestForm-explanation",
+      );
       const solvedField = screen.getByTestId("HelpRequestForm-solved");
       const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
@@ -150,13 +160,19 @@ describe("HelpRequestEditPage tests", () => {
 
       expect(submitButton).toHaveTextContent("Update");
 
-      fireEvent.change(requesterEmailField, { target: { value: "ldelplaya@ucsb.edu" } });
+      fireEvent.change(requesterEmailField, {
+        target: { value: "ldelplaya@ucsb.edu" },
+      });
       fireEvent.change(teamIdField, { target: { value: "s22-6pm-3" } });
       fireEvent.change(tableOrBreakoutRoomField, { target: { value: "8" } });
-      fireEvent.change(requestTimeField, { target: { value: "2022-04-20T18:35:00" } });
-      fireEvent.change(explanationField, { target: { value: "Need help with tests" } });
+      fireEvent.change(requestTimeField, {
+        target: { value: "2022-04-20T18:35:00" },
+      });
+      fireEvent.change(explanationField, {
+        target: { value: "Need help with tests" },
+      });
       fireEvent.change(solvedField, { target: { value: "true" } });
-      
+
       fireEvent.click(submitButton);
 
       await waitFor(() => expect(mockToast).toBeCalled());
