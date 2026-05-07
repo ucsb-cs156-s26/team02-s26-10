@@ -142,7 +142,8 @@ function ArticlesForm({
                 required: "Date Added is required.",
                 pattern: {
                   value: isodate_regex,
-                  message: "Date Added must be in ISO format (e.g. 2022-01-02T12:00:00).",
+                  message:
+                    "Date Added must be in ISO format (e.g. 2022-01-02T12:00:00).",
                 },
               })}
             />
