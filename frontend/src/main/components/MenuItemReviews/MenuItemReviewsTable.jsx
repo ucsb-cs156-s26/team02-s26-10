@@ -66,5 +66,11 @@ export default function MenuItemReviewsTable({ reviews, currentUser }) {
     );
   }
 
-  return <OurTable data={reviews} columns={columns} testid={"MenuItemReviewsTable"} />;
+  return (
+    <OurTable
+      data={reviews}
+      columns={columns}
+      testid={"MenuItemReviewsTable"}
+    />
+  );
 }
