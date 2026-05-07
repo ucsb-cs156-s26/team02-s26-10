@@ -120,6 +120,7 @@ function HelpRequestForm({
               data-testid="HelpRequestForm-requestTime"
               id="requestTime"
               type="datetime-local"
+              step="1"
               isInvalid={Boolean(errors.requestTime)}
               {...register("requestTime", {
                 required: true,
@@ -128,8 +129,6 @@ function HelpRequestForm({
             />
             <Form.Control.Feedback type="invalid">
               {errors.requestTime && "Request Time is required. "}
-              {errors.requestTime?.type === "pattern" &&
-                "Request Time must be in the iso format YYYY-MM-DDThh:mm:ssZ, e.g. 2022-07-23T12:00:00Z"}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
