@@ -194,6 +194,7 @@ describe("AppNavbar tests", () => {
   });
 
   test("renders the UCSBOrganization link correctly", async () => {
+  test("renders the UCSBDiningCommonsMenuItem link correctly", async () => {
     const currentUser = currentUserFixtures.userOnly;
     const systemInfo = systemInfoFixtures.showingBoth;
 
@@ -215,6 +216,10 @@ describe("AppNavbar tests", () => {
     const link = screen.getByText("UCSBOrganization");
     expect(link).toBeInTheDocument();
     expect(link.getAttribute("href")).toBe("/ucsborganization");
+    await screen.findByText("UCSBDiningCommonsMenuItem");
+    const link = screen.getByText("UCSBDiningCommonsMenuItem");
+    expect(link).toBeInTheDocument();
+    expect(link.getAttribute("href")).toBe("/diningcommonsmenuitem");
   });
 
   test("Restaurant and UCSBDates links do NOT show when not logged in", async () => {
