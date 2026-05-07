@@ -1,22 +1,26 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import RestaurantForm from "main/components/Restaurants/RestaurantForm";
+import HelpRequestForm from "main/components/HelpRequest/HelpRequestForm";
 import { Navigate } from "react-router";
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function RestaurantCreatePage({ storybook = false }) {
-  const objectToAxiosParams = (restaurant) => ({
-    url: "/api/restaurants/post",
+export default function HelpRequestCreatePage({ storybook = false }) {
+  const objectToAxiosParams = (helpRequest) => ({
+    url: "/api/helprequest/post",
     method: "POST",
     params: {
-      name: restaurant.name,
-      description: restaurant.description,
+      requesterEmail: helpRequest.requesterEmail,
+      teamId: helpRequest.teamId,
+      tableOrBreakoutRoom: helpRequest.tableOrBreakoutRoom,
+      requestTime: helpRequest.requestTime,
+      explanation: helpRequest.explanation,
+      solved: helpRequest.solved,
     },
   });
 
-  const onSuccess = (restaurant) => {
+  const onSuccess = (helpRequest) => {
     toast(
-      `New restaurant Created - id: ${restaurant.id} name: ${restaurant.name}`,
+      `New Help Request Created - id: ${helpRequest.id} requesterEmail: ${helpRequest.requesterEmail}`,
     );
   };
 
@@ -24,7 +28,7 @@ export default function RestaurantCreatePage({ storybook = false }) {
     objectToAxiosParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    ["/api/restaurants/all"], // mutation makes this key stale so that pages relying on it reload
+    ["/api/helprequest/all"], // mutation makes this key stale so that pages relying on it reload
   );
 
   const { isSuccess } = mutation;
@@ -34,14 +38,14 @@ export default function RestaurantCreatePage({ storybook = false }) {
   };
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/restaurants" />;
+    return <Navigate to="/helprequest" />;
   }
 
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Create New Restaurant</h1>
-        <RestaurantForm submitAction={onSubmit} />
+        <h1>Create New Help Request</h1>
+        <HelpRequestForm submitAction={onSubmit} />
       </div>
     </BasicLayout>
   );
