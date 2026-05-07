@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
-import { restaurantFixtures } from "fixtures/restaurantFixtures";
-import RestaurantTable from "main/components/Restaurants/RestaurantTable";
+import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
+import HelpRequestTable from "main/components/HelpRequest/HelpRequestTable";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -16,12 +16,12 @@ vi.mock("react-router", async () => {
   };
 });
 
-describe("RestaurantTable tests", () => {
+describe("HelpRequestTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Name", "Description"];
-  const expectedFields = ["id", "name", "description"];
-  const testId = "RestaurantTable";
+  const expectedHeaders = ["id", "Requester Email", "Team ID", "Table Or Breakout Room", "Request Time", "Explanation", "Solved"];
+  const expectedFields = ["id", "requesterEmail", "teamId", "tableOrBreakoutRoom", "requestTime", "explanation", "solved"];
+  const testId = "HelpRequestTable";
 
   test("renders empty table correctly", () => {
     // arrange
@@ -31,7 +31,7 @@ describe("RestaurantTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable restaurants={[]} currentUser={currentUser} />
+          <HelpRequestTable helpRequest={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -58,8 +58,8 @@ describe("RestaurantTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable
-            restaurants={restaurantFixtures.threeRestaurants}
+          <HelpRequestTable
+            helpRequest={helpRequestFixtures.threeRequests}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -78,18 +78,18 @@ describe("RestaurantTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
+    ).toHaveTextContent("user1@example.com");
+
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cristino's Bakery");
-
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "3",
-    );
-    expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-name`),
-    ).toHaveTextContent("Freebirds");
+      screen.getByTestId(`${testId}-cell-row-1-col-requesterEmail`),
+    ).toHaveTextContent("user2@example.com");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -112,8 +112,8 @@ describe("RestaurantTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable
-            restaurants={restaurantFixtures.threeRestaurants}
+          <HelpRequestTable
+            helpRequest={helpRequestFixtures.threeRequests}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -132,18 +132,18 @@ describe("RestaurantTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
+    ).toHaveTextContent("user1@example.com");
+
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cristino's Bakery");
-
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "3",
-    );
-    expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-name`),
-    ).toHaveTextContent("Freebirds");
+      screen.getByTestId(`${testId}-cell-row-1-col-requesterEmail`),
+    ).toHaveTextContent("user2@example.com");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
@@ -157,8 +157,8 @@ describe("RestaurantTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable
-            restaurants={restaurantFixtures.threeRestaurants}
+          <HelpRequestTable
+            helpRequest={helpRequestFixtures.threeRequests}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -168,10 +168,10 @@ describe("RestaurantTable tests", () => {
     // assert - check that the expected content is rendered
     expect(
       await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-    ).toHaveTextContent("2");
+    ).toHaveTextContent("1");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cristino's Bakery");
+      screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
+    ).toHaveTextContent("user1@example.com");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -183,7 +183,7 @@ describe("RestaurantTable tests", () => {
 
     // assert - check that the navigate function was called with the expected path
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/restaurants/edit/2"),
+      expect(mockedNavigate).toHaveBeenCalledWith("/helpRequest/edit/1"),
     );
   });
 
@@ -193,15 +193,15 @@ describe("RestaurantTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/restaurants")
-      .reply(200, { message: "Restaurant deleted" });
+      .onDelete("/api/helpRequest")
+      .reply(200, { message: "Help Request deleted successfully" });
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable
-            restaurants={restaurantFixtures.threeRestaurants}
+          <HelpRequestTable
+            helpRequest={helpRequestFixtures.threeRequests}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -211,10 +211,10 @@ describe("RestaurantTable tests", () => {
     // assert - check that the expected content is rendered
     expect(
       await screen.findByTestId(`${testId}-cell-row-0-col-id`),
-    ).toHaveTextContent("2");
+    ).toHaveTextContent("1");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cristino's Bakery");
+      screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
+    ).toHaveTextContent("user1@example.com");
 
     const deleteButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
@@ -227,6 +227,6 @@ describe("RestaurantTable tests", () => {
     // assert - check that the delete endpoint was called
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ id: 2 });
+    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
 });
