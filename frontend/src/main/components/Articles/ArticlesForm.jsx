@@ -128,29 +128,28 @@ function ArticlesForm({
 
       <Row>
         <Col>
-          <Form.Group className="mb-3">
+        <Form.Group className="mb-3">
             <Form.Label htmlFor="dateAdded">
-              Date Added (ISO format, e.g. 2022-01-02T12:00:00)
+                Date Added (ISO format, e.g. 2022-01-02T12:00:00)
             </Form.Label>
             <Form.Control
-              data-testid="ArticlesForm-dateAdded"
-              id="dateAdded"
-              type="text"
-              isInvalid={Boolean(errors.dateAdded)}
-              placeholder="e.g. 2022-01-02T12:00:00"
-              {...register("dateAdded", {
+                data-testid="ArticlesForm-dateAdded"
+                id="dateAdded"
+                type="text"
+                isInvalid={Boolean(errors.dateAdded)}
+                placeholder="e.g. 2022-01-02T12:00:00"
+                {...register("dateAdded", {
                 required: "Date Added is required.",
                 pattern: {
-                  value: isodate_regex,
-                  message:
-                    "Date Added must be in ISO format (e.g. 2022-01-02T12:00:00).",
+                    value: isodate_regex,
+                    message: "Date Added must be in ISO format (e.g. 2022-01-02T12:00:00).",
                 },
-              })}
+                })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.dateAdded?.message}
+                {errors.dateAdded?.message}
             </Form.Control.Feedback>
-          </Form.Group>
+        </Form.Group>
         </Col>
       </Row>
 
