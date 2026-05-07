@@ -1,6 +1,6 @@
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
 import MenuItemReviewForm from "main/components/MenuItemReviews/MenuItemReviewForm";
-import { menuItemReviewFixtures } from "fixtures/menuItemReviewFixtures";
+import { menuItemReviewsFixtures } from "fixtures/menuItemReviewsFixtures";
 import { BrowserRouter as Router } from "react-router";
 import { expect } from "vitest";
 
@@ -29,7 +29,7 @@ describe("MenuItemReviewForm tests", () => {
     render(
       <Router>
         <MenuItemReviewForm
-          initialContents={menuItemReviewFixtures.oneReview}
+          initialContents={menuItemReviewsFixtures.oneReview}
         />
       </Router>,
     );
