@@ -108,7 +108,7 @@ function ArticlesForm({
             <Form.Control
               data-testid="ArticlesForm-email"
               id="email"
-              type="email"
+              type="text"
               isInvalid={Boolean(errors.email)}
               placeholder="e.g. user@example.com"
               {...register("email", {
