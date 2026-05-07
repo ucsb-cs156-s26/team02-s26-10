@@ -89,25 +89,17 @@ describe("HelpRequestCreatePage tests", () => {
 
     const requesterEmailInput = screen.getByLabelText("Requester Email");
     const teamIdInput = screen.getByLabelText("Team ID");
-    const tableOrBreakoutRoomInput = screen.getByLabelText(
-      "Table Or Breakout Room",
-    );
+    const tableOrBreakoutRoomInput = screen.getByLabelText("Table Or Breakout Room");
     const requestTimeInput = screen.getByLabelText("Request Time");
     const explanationInput = screen.getByLabelText("Explanation");
     const solvedInput = screen.getByLabelText("Solved");
     const createButton = screen.getByText("Create");
 
-    fireEvent.change(requesterEmailInput, {
-      target: { value: "cgaucho@ucsb.edu" },
-    });
+    fireEvent.change(requesterEmailInput, { target: { value: "cgaucho@ucsb.edu" } });
     fireEvent.change(teamIdInput, { target: { value: "s22-5pm-3" } });
     fireEvent.change(tableOrBreakoutRoomInput, { target: { value: "7" } });
-    fireEvent.change(requestTimeInput, {
-      target: { value: "2022-04-20T17:35:00" },
-    });
-    fireEvent.change(explanationInput, {
-      target: { value: "Need help with Swagger-ui" },
-    });
+    fireEvent.change(requestTimeInput, { target: { value: "2022-04-20T17:35:00" } });
+    fireEvent.change(explanationInput, { target: { value: "Need help with Swagger-ui" } });
     fireEvent.change(solvedInput, { target: { value: "false" } });
 
     fireEvent.click(createButton);
