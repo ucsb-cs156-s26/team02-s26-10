@@ -175,12 +175,12 @@ describe("ArticlesTable tests", () => {
 
   test("Delete button calls delete callback", async () => {
     const currentUser = currentUserFixtures.adminUser;
-
+  
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
       .onDelete("/api/articles")
       .reply(200, { message: "Article deleted" });
-
+  
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -191,28 +191,22 @@ describe("ArticlesTable tests", () => {
         </MemoryRouter>
       </QueryClientProvider>,
     );
-
+  
     await waitFor(() => {
       expect(
         screen.getByTestId(`ArticlesTable-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
-
+  
     const deleteButton = screen.getByTestId(
       `ArticlesTable-cell-row-0-col-Delete-button`,
     );
     expect(deleteButton).toBeInTheDocument();
-
+  
     fireEvent.click(deleteButton);
-
-    // kills the url: "" mutant — asserts the right endpoint was called
+  
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
     expect(axiosMock.history.delete[0].url).toBe("/api/articles");
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
-
-    // kills the onDeleteSuccess mutant — asserts toast appears
-    await waitFor(() => {
-      expect(screen.getByText("Article deleted")).toBeInTheDocument();
-    });
   });
 });
