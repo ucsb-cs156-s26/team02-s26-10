@@ -43,7 +43,9 @@ describe("HelpRequestForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("HelpRequestForm-requesterEmail");
-    const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+    const requesterEmailField = screen.getByTestId(
+      "HelpRequestForm-requesterEmail",
+    );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const solvedField = screen.getByTestId("HelpRequestForm-solved");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
@@ -58,7 +60,9 @@ describe("HelpRequestForm tests", () => {
       screen.getByText(/Requester Email must be a valid email address/),
     ).toBeInTheDocument();
 
-    await screen.findByText(/Whether the request is solved must be a boolean value/);
+    await screen.findByText(
+      /Whether the request is solved must be a boolean value/,
+    );
     expect(
       screen.getByText(/Whether the request is solved must be a boolean value/),
     ).toBeInTheDocument();
@@ -77,10 +81,16 @@ describe("HelpRequestForm tests", () => {
 
     await screen.findByText(/Requester Email is required./);
     expect(screen.getByText(/teamId is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Table or Breakout Room is required./)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Table or Breakout Room is required./),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Request Time is required./)).toBeInTheDocument();
     expect(screen.getByText(/Explanation is required./)).toBeInTheDocument();
-    expect(screen.getByText(/Whether the request is solved \('true' or 'false'\) is required./)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Whether the request is solved \('true' or 'false'\) is required./,
+      ),
+    ).toBeInTheDocument();
   });
 
   test("No Error messsages on good input", async () => {
@@ -93,20 +103,28 @@ describe("HelpRequestForm tests", () => {
     );
     await screen.findByTestId("HelpRequestForm-requesterEmail");
 
-    const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+    const requesterEmailField = screen.getByTestId(
+      "HelpRequestForm-requesterEmail",
+    );
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+    const tableOrBreakoutRoomField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom",
+    );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
     const solvedField = screen.getByTestId("HelpRequestForm-solved");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
-    fireEvent.change(requesterEmailField, { target: { value: "user1@example.com" }});
+    fireEvent.change(requesterEmailField, {
+      target: { value: "user1@example.com" },
+    });
     fireEvent.change(teamIdField, { target: { value: "10" } });
     fireEvent.change(tableOrBreakoutRoomField, {
       target: { value: "table" },
     });
-    fireEvent.change(requestTimeField, { target: { value: "2022-05-06T23:05:27" } });
+    fireEvent.change(requestTimeField, {
+      target: { value: "2022-05-06T23:05:27" },
+    });
     fireEvent.change(explanationField, { target: { value: "no explanation" } });
     fireEvent.change(solvedField, { target: { value: "true" } });
     fireEvent.click(submitButton);
@@ -120,7 +138,9 @@ describe("HelpRequestForm tests", () => {
       screen.queryByText(/Request Time must be in the iso format/),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Whether the request is solved must be a boolean value/),
+      screen.queryByText(
+        /Whether the request is solved must be a boolean value/,
+      ),
     ).not.toBeInTheDocument();
   });
 
