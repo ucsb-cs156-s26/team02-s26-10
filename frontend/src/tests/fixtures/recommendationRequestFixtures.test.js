@@ -2,15 +2,49 @@ import { recommendationRequestFixtures } from "main/fixtures/recommendationReque
 
 describe("recommendationRequestFixtures", () => {
   test("exports fixtures in expected shape", () => {
-    expect(
-      recommendationRequestFixtures.oneRecommendationRequest,
-    ).toBeDefined();
-    expect(
-      recommendationRequestFixtures.threeRecommendationRequests,
-    ).toHaveLength(3);
-    expect(
-      recommendationRequestFixtures.threeRecommendationRequests[0]
-        .requesterEmail,
-    ).toBe("cgaucho@ucsb.edu");
+    const expected = {
+      oneRecommendationRequest: {
+        id: 1,
+        requesterEmail: "cgaucho@ucsb.edu",
+        professorEmail: "phtcon@ucsb.edu",
+        explanation: "BS/MS program",
+        dateRequested: "2022-04-20T00:00:00",
+        dateNeeded: "2022-05-01T00:00:00",
+        done: false,
+      },
+
+      threeRecommendationRequests: [
+        {
+          id: 1,
+          requesterEmail: "cgaucho@ucsb.edu",
+          professorEmail: "phtcon@ucsb.edu",
+          explanation: "BS/MS program",
+          dateRequested: "2022-04-20T00:00:00",
+          dateNeeded: "2022-05-01T00:00:00",
+          done: false,
+        },
+        {
+          id: 2,
+          requesterEmail: "ldelplaya@ucsb.edu",
+          professorEmail: "richert@ucsb.edu",
+          explanation: "PhD CS Stanford",
+          dateRequested: "2022-05-20T00:00:00",
+          dateNeeded: "2022-11-15T00:00:00",
+          done: true,
+        },
+        {
+          id: 3,
+          requesterEmail: "user3@example.com",
+          professorEmail: "userprof@example.com",
+          explanation: "Scholarship recommendation",
+          dateRequested: "2022-06-01T00:00:00",
+          dateNeeded: "2022-06-30T00:00:00",
+          done: false,
+        },
+      ],
+    };
+
+    // Deep equality so mutations to fixture literals are caught.
+    expect(recommendationRequestFixtures).toEqual(expected);
   });
 });
