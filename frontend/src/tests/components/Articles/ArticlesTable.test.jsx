@@ -219,7 +219,7 @@ describe("ArticlesTable tests", () => {
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
 
     await waitFor(() => {
-      expect(toast).toHaveBeenCalledWith("Article deleted");
+        expect(toast).toHaveBeenCalledWith({ message: "Article deleted" });
     });
   });
 });
