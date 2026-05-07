@@ -39,10 +39,7 @@ describe("UCSBOrganizationTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable
-            organizations={[]}
-            currentUser={currentUser}
-          />
+          <UCSBOrganizationTable organizations={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -166,9 +163,7 @@ describe("UCSBOrganizationTable tests", () => {
     fireEvent.click(editButton);
 
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith(
-        "/ucsborganization/edit/ZPR",
-      ),
+      expect(mockedNavigate).toHaveBeenCalledWith("/ucsborganization/edit/ZPR"),
     );
   });
 
