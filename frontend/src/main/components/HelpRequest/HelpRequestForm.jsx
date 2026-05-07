@@ -29,7 +29,7 @@ function HelpRequestForm({
   const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Accepts from 1900-2099 followed by 1-4.  Close enough.
 
   // Stryker disable next-line all
-  const  tof_regex = /true|false/
+  const tof_regex = /true|false/;
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -60,7 +60,7 @@ function HelpRequestForm({
               isInvalid={Boolean(errors.requesterEmail)}
               {...register("requesterEmail", {
                 required: true,
-                pattern: email_regex, 
+                pattern: email_regex,
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -92,7 +92,9 @@ function HelpRequestForm({
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="tableOrBreakoutRoom">Table Or Breakout Room</Form.Label>
+            <Form.Label htmlFor="tableOrBreakoutRoom">
+              Table Or Breakout Room
+            </Form.Label>
             <Form.Control
               data-testid="HelpRequestForm-tableOrBreakoutRoom"
               id="tableOrBreakoutRoom"
@@ -103,7 +105,8 @@ function HelpRequestForm({
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.tableOrBreakoutRoom && "Table or Breakout Room is required. "}
+              {errors.tableOrBreakoutRoom &&
+                "Table or Breakout Room is required. "}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
@@ -163,11 +166,12 @@ function HelpRequestForm({
               isInvalid={Boolean(errors.solved)}
               {...register("solved", {
                 required: true,
-                pattern: tof_regex
+                pattern: tof_regex,
               })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.solved && "Whether the request is solved ('true' or 'false') is required. "}
+              {errors.solved &&
+                "Whether the request is solved ('true' or 'false') is required. "}
               {errors.solved?.type === "pattern" &&
                 "Whether the request is solved must be a boolean value ('true' or 'false')."}
             </Form.Control.Feedback>
