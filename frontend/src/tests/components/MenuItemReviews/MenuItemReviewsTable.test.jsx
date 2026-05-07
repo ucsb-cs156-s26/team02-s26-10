@@ -19,6 +19,93 @@ vi.mock("react-router", async () => {
 describe("UserTable tests", () => {
   const queryClient = new QueryClient();
 
+  // Added from restaurant
+  test("renders empty table correctly", () => {
+    const expectedHeaders = [
+      "id",
+      "Item Id",
+      "Reviewer Email",
+      "Stars",
+      "Date Reviewed",
+      "Comments",
+    ];
+    const expectedFields = [
+      "id",
+      "itemId",
+      "reviewerEmail",
+      "stars",
+      "dateReviewed",
+      "comments",
+    ];
+    const testId = "MenuItemReviewsTable";
+
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
+
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <MenuItemReviewsTable reviews={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    // assert
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const fieldElement = screen.queryByTestId(
+        `${testId}-cell-row-0-col-${field}`,
+      );
+      expect(fieldElement).not.toBeInTheDocument();
+    });
+  });
+
+  // added from restaurant
+  test("Edit button navigates to the edit page", async () => {
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
+
+    // act - render the component
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <MenuItemReviewsTable
+            reviews={menuItemReviewsFixtures.threeReviews}
+            currentUser={currentUser}
+          />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    const testId = "MenuItemReviewsTable";
+
+    // assert - check that the expected content is rendered
+    // expect(
+    //   await screen.findByTestId(`${testId}-cell-row-0-col-id`),
+    // ).toHaveTextContent("1");
+    // expect(
+    //   screen.getByTestId(`${testId}-cell-row-0-col-name`),
+    // ).toHaveTextContent("Cristino's Bakery");
+
+    const editButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
+    expect(editButton).toBeInTheDocument();
+
+    // act - click the edit button
+    fireEvent.click(editButton);
+
+    // assert - check that the navigate function was called with the expected path
+    await waitFor(() =>
+      expect(mockedNavigate).toHaveBeenCalledWith("/menuitemreviews/edit/1"),
+    );
+  });
+
   test("Has the expected column headers and content for ordinary user", () => {
     const currentUser = currentUserFixtures.userOnly;
 
