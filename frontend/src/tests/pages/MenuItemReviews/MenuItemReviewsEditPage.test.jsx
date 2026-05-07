@@ -88,14 +88,16 @@ describe("MenuItemReviewsEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/menuitemreviews", { params: { id: 17 } }).reply(200, {
-        id: 17,
-        itemId: 1,
-        reviewerEmail: "test1@testing.com",
-        stars: 1,
-        dateReviewed: "2022-01-02T12:00:00",
-        comments: "1 star",
-      });
+      axiosMock
+        .onGet("/api/menuitemreviews", { params: { id: 17 } })
+        .reply(200, {
+          id: 17,
+          itemId: 1,
+          reviewerEmail: "test1@testing.com",
+          stars: 1,
+          dateReviewed: "2022-01-02T12:00:00",
+          comments: "1 star",
+        });
       axiosMock.onPut("/api/menuitemreviews").reply(200, {
         id: 17,
         itemId: 11,
@@ -211,7 +213,13 @@ describe("MenuItemReviewsEditPage tests", () => {
       expect(axiosMock.history.put.length).toBe(1); // times called
       expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
       expect(axiosMock.history.put[0].data).toBe(
-        JSON.stringify({itemId:"11",reviewerEmail:"test11@testing.com",stars:"11",dateReviewed:"2022-11-02T12:00",comments:"11 star"}),
+        JSON.stringify({
+          itemId: "11",
+          reviewerEmail: "test11@testing.com",
+          stars: "11",
+          dateReviewed: "2022-11-02T12:00",
+          comments: "11 star",
+        }),
       ); // posted object
     });
   });

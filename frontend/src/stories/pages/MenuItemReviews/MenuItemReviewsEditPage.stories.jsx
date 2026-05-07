@@ -32,7 +32,9 @@ Default.parameters = {
       });
     }),
     http.put("/api/menuitemreviews", () => {
-      return HttpResponse.json(menuItemReviewsFixtures.oneReview, { status: 200 });
+      return HttpResponse.json(menuItemReviewsFixtures.oneReview, {
+        status: 200,
+      });
     }),
   ],
 };
