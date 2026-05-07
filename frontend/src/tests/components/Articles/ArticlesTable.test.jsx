@@ -205,7 +205,14 @@ describe("ArticlesTable tests", () => {
 
     fireEvent.click(deleteButton);
 
+    // kills the url: "" mutant — asserts the right endpoint was called
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
+    expect(axiosMock.history.delete[0].url).toBe("/api/articles");
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+
+    // kills the onDeleteSuccess mutant — asserts toast appears
+    await waitFor(() => {
+      expect(screen.getByText("Article deleted")).toBeInTheDocument();
+    });
   });
 });
