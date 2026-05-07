@@ -1,17 +1,17 @@
 import React from "react";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { restaurantFixtures } from "fixtures/restaurantFixtures";
+import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 import { http, HttpResponse } from "msw";
 
-import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
+import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 
 export default {
-  title: "pages/Restaurants/RestaurantIndexPage",
-  component: RestaurantIndexPage,
+  title: "pages/HelpRequest/HelpRequestIndexPage",
+  component: HelpRequestIndexPage,
 };
 
-const Template = () => <RestaurantIndexPage storybook={true} />;
+const Template = () => <HelpRequestIndexPage storybook={true} />;
 
 export const Empty = Template.bind({});
 Empty.parameters = {
@@ -26,7 +26,7 @@ Empty.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/restaurants/all", () => {
+    http.get("/api/helprequest/all", () => {
       return HttpResponse.json([], { status: 200 });
     }),
   ],
@@ -42,8 +42,8 @@ ThreeItemsOrdinaryUser.parameters = {
     http.get("/api/systemInfo", () => {
       return HttpResponse.json(systemInfoFixtures.showingNeither);
     }),
-    http.get("/api/restaurants/all", () => {
-      return HttpResponse.json(restaurantFixtures.threeRestaurants);
+    http.get("/api/helprequest/all", () => {
+      return HttpResponse.json(helpRequestFixtures.threeRequests);
     }),
   ],
 };
@@ -58,12 +58,12 @@ ThreeItemsAdminUser.parameters = {
     http.get("/api/systemInfo", () => {
       return HttpResponse.json(systemInfoFixtures.showingNeither);
     }),
-    http.get("/api/restaurants/all", () => {
-      return HttpResponse.json(restaurantFixtures.threeRestaurants);
+    http.get("/api/helprequest/all", () => {
+      return HttpResponse.json(helpRequestFixtures.threeRequests);
     }),
-    http.delete("/api/restaurants", () => {
+    http.delete("/api/helprequest", () => {
       return HttpResponse.json(
-        { message: "Restaurant deleted successfully" },
+        { message: "Help Request deleted successfully" },
         { status: 200 },
       );
     }),
