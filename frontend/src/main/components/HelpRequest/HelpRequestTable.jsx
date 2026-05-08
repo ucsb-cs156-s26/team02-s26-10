@@ -25,7 +25,7 @@ export default function HelpRequestTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/restaurants/all"],
+    ["/api/helprequest/all"],
   );
   // Stryker restore all
 
