@@ -14,7 +14,6 @@ import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 import HelpRequestCreatePage from "main/pages/HelpRequest/HelpRequestCreatePage";
 import HelpRequestEditPage from "main/pages/HelpRequest/HelpRequestEditPage";
-
 import MenuItemReviewsIndexPage from "main/pages/MenuItemReviews/MenuItemReviewsIndexPage";
 import MenuItemReviewsCreatePage from "main/pages/MenuItemReviews/MenuItemReviewsCreatePage";
 import MenuItemReviewsEditPage from "main/pages/MenuItemReviews/MenuItemReviewsEditPage";
@@ -113,6 +112,7 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
+          <Route exact path="/helpRequest" element={<HelpRequestIndexPage />} />
           <Route
             exact
             path="/diningcommonsmenuitem"
@@ -122,6 +122,16 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
         <>
+          <Route
+            exact
+            path="/helpRequest/edit/:id"
+            element={<HelpRequestEditPage />}
+          />
+          <Route
+            exact
+            path="/helpRequest/create"
+            element={<HelpRequestCreatePage />}
+          />
           <Route
             exact
             path="/diningcommonsmenuitem/edit/:id"
