@@ -179,7 +179,7 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
 
     await waitFor(() =>
       expect(mockedNavigate).toHaveBeenCalledWith(
-        "/diningcommonsmenuitem/edit/2",
+        "/ucsbdiningcommonsmenuitem/edit/2",
       ),
     );
   });

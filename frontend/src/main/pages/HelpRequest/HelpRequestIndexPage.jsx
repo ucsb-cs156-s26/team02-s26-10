@@ -26,7 +26,7 @@ export default function HelpRequestIndexPage() {
       return (
         <Button
           variant="primary"
-          href="/helpRequest/create"
+          href="/helprequest/create"
           style={{ float: "right" }}
         >
           Create Help Request
