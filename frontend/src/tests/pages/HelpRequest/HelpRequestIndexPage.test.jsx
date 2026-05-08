@@ -1,11 +1,12 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
+import mockConsole from "tests/testutils/mockConsole";
+import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -20,7 +21,9 @@ vi.mock("react-toastify", async (importOriginal) => {
 
 describe("HelpRequestIndexPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
+
   const testId = "HelpRequestTable";
+
   const setupUserOnly = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
@@ -45,8 +48,8 @@ describe("HelpRequestIndexPage tests", () => {
 
   const queryClient = new QueryClient();
 
-  test("Renders empty table without crashing for ordinary user", async () => {
-    setupUserOnly();
+  test("Renders with Create Button for admin user", async () => {
+    setupAdminUser();
     axiosMock.onGet("/api/helprequest/all").reply(200, []);
 
     render(
@@ -58,11 +61,11 @@ describe("HelpRequestIndexPage tests", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("Help Requests")).toBeInTheDocument();
+      expect(screen.getByText(/Create Help Request/)).toBeInTheDocument();
     });
-
-    const createButton = screen.queryByText("Create Help Request");
-    expect(createButton).not.toBeInTheDocument();
+    const button = screen.getByText(/Create Help Request/);
+    expect(button).toHaveAttribute("href", "/helprequest/create");
+    expect(button).toHaveAttribute("style", "float: right;");
   });
 
   test("renders three help requests correctly for regular user", async () => {
@@ -81,26 +84,42 @@ describe("HelpRequestIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId("HelpRequestTable-cell-row-0-col-id"),
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
       ).toHaveTextContent("1");
     });
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
+      "3",
+    );
 
-    expect(
-      screen.getByTestId("HelpRequestTable-cell-row-1-col-id"),
-    ).toHaveTextContent("2");
-    expect(
-      screen.getByTestId("HelpRequestTable-cell-row-2-col-id"),
-    ).toHaveTextContent("3");
+    const createHelpRequestButton = screen.queryByText("Create Help Request");
+    expect(createHelpRequestButton).not.toBeInTheDocument();
 
-    const createButton = screen.queryByText("Create Help Request");
-    expect(createButton).not.toBeInTheDocument();
+    const requesterEmail = screen.getByText("user1@example.com");
+    expect(requesterEmail).toBeInTheDocument();
+
+    const explanation = screen.getByText(
+      "table",
+    );
+    expect(explanation).toBeInTheDocument();
+
+    // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
+    expect(
+      screen.queryByTestId("HelpRequestTable-cell-row-0-col-Delete-button"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("HelpRequestTable-cell-row-0-col-Edit-button"),
+    ).not.toBeInTheDocument();
   });
 
-  test("renders three help requests and create button for admin user", async () => {
-    setupAdminUser();
-    axiosMock
-      .onGet("/api/helprequest/all")
-      .reply(200, helpRequestFixtures.threeRequests);
+  test("renders empty table when backend unavailable, user only", async () => {
+    setupUserOnly();
+
+    axiosMock.onGet("/api/helprequest/all").timeout();
+
+    const restoreConsole = mockConsole();
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -111,21 +130,14 @@ describe("HelpRequestIndexPage tests", () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId("HelpRequestTable-cell-row-0-col-id"),
-      ).toHaveTextContent("1");
+      expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1);
     });
 
-    expect(
-      screen.getByTestId("HelpRequestTable-cell-row-1-col-id"),
-    ).toHaveTextContent("2");
-    expect(
-      screen.getByTestId("HelpRequestTable-cell-row-2-col-id"),
-    ).toHaveTextContent("3");
-
-    const createButton = await screen.findByText("Create Help Request");
-    expect(createButton).toBeInTheDocument();
-    expect(createButton).toHaveAttribute("href", "/helprequest/create");
+    const errorMessage = console.error.mock.calls[0][0];
+    expect(errorMessage).toMatch(
+      "Error communicating with backend via GET on /api/helprequest/all",
+    );
+    restoreConsole();
   });
 
   test("what happens when you click delete, admin", async () => {
