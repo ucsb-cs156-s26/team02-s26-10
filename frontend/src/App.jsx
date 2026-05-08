@@ -131,6 +131,9 @@ function App() {
             exact
             path="/helpRequest/create"
             element={<HelpRequestCreatePage />}
+          />
+          <Route
+            exact
             path="/diningcommonsmenuitem/edit/:id"
             element={<UCSBDiningCommonsMenuItemEditPage />}
           />
