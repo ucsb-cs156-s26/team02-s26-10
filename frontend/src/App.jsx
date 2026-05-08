@@ -112,6 +112,9 @@ function App() {
             exact
             path="/ucsborganization"
             element={<UCSBOrganizationIndexPage />}
+          />
+          <Route
+            exact
             path="/diningcommonsmenuitem"
             element={<UCSBDiningCommonsMenuItemIndexPage />}
           />
@@ -128,6 +131,9 @@ function App() {
             exact
             path="/ucsborganization/create"
             element={<UCSBOrganizationCreatePage />}
+          />
+          <Route
+            exact
             path="/diningcommonsmenuitem/edit/:id"
             element={<UCSBDiningCommonsMenuItemEditPage />}
           />

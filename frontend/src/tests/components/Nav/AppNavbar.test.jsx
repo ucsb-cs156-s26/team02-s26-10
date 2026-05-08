@@ -194,7 +194,6 @@ describe("AppNavbar tests", () => {
   });
 
   test("renders the UCSBOrganization link correctly", async () => {
-  test("renders the UCSBDiningCommonsMenuItem link correctly", async () => {
     const currentUser = currentUserFixtures.userOnly;
     const systemInfo = systemInfoFixtures.showingBoth;
 
@@ -216,6 +215,26 @@ describe("AppNavbar tests", () => {
     const link = screen.getByText("UCSBOrganization");
     expect(link).toBeInTheDocument();
     expect(link.getAttribute("href")).toBe("/ucsborganization");
+  });
+
+  test("renders the UCSBDiningCommonsMenuItem link correctly", async () => {
+    const currentUser = currentUserFixtures.userOnly;
+    const systemInfo = systemInfoFixtures.showingBoth;
+
+    const doLogin = vi.fn();
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <AppNavbar
+            currentUser={currentUser}
+            systemInfo={systemInfo}
+            doLogin={doLogin}
+          />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
     await screen.findByText("UCSBDiningCommonsMenuItem");
     const link = screen.getByText("UCSBDiningCommonsMenuItem");
     expect(link).toBeInTheDocument();
