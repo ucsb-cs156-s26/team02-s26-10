@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s26/team02-s26-10
 owner: ucsb-cs156-s26
 repo_name: team02-s26-10
-pull_requests: [{"author":{"id":"U_kgDOCuipLw","is_bot":false,"login":"yuhangj554","name":"Yuhang Jiang"},"headRefName":"revert-114-ok-quickfixes","number":115,"title":"Revert \"HelpRequest create button casing and DiningCommonsMenuItem edit URL\"","url":"https://github.com/ucsb-cs156-s26/team02-s26-10/pull/115"}]
+pull_requests: []
