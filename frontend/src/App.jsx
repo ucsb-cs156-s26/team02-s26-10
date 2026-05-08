@@ -117,7 +117,7 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/helpRequest" element={<HelpRequestIndexPage />} />
+          <Route exact path="/helprequest" element={<HelpRequestIndexPage />} />
           <Route
             exact
             path="/ucsborganization"
@@ -144,12 +144,12 @@ function App() {
           />
           <Route
             exact
-            path="/helpRequest/edit/:id"
+            path="/helprequest/edit/:id"
             element={<HelpRequestEditPage />}
           />
           <Route
             exact
-            path="/helpRequest/create"
+            path="/helprequest/create"
             element={<HelpRequestCreatePage />}
           />
           <Route
@@ -166,19 +166,19 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/helpRequest" element={<HelpRequestIndexPage />} />
+          <Route exact path="/helprequest" element={<HelpRequestIndexPage />} />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
         <>
           <Route
             exact
-            path="/helpRequest/edit/:id"
+            path="/helprequest/edit/:id"
             element={<HelpRequestEditPage />}
           />
           <Route
             exact
-            path="/helpRequest/create"
+            path="/helprequest/create"
             element={<HelpRequestCreatePage />}
           />
         </>
